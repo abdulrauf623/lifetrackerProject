@@ -1,0 +1,44 @@
+.register{
+
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    margin-left: 800px;
+
+    margin-right: 500px;
+
+
+
+    height: 300px;
+}
+
+.form{
+
+
+    display: flex;
+
+    flex-direction: column;
+
+
+
+}
+
+
+.inputfield{
+
+
+
+    display: flex;
+}
+
+
+.input{
+
+    width: 200px;
+
+    height: 20px;
+}

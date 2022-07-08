@@ -1,15 +1,25 @@
-import Hero from "../Hero/Hero";
 import Navbar from "../Navbar/Navbar";
 
 import "./App.css";
 
-import Grid from "../Grid/Grid";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "../Home/Home";
+import Registration from "../Registration/SignUp";
+import SignInSide from "../SignInSide/SignInSide";
+import SignUp from "../Registration/SignUp";
 export default function App() {
   return (
     <div className="app">
+      
+      <BrowserRouter>
       <Navbar />
-      <Hero />
-      <Grid />
+        <Routes>
+            <Route path = "/" element = {<Home/>} />
+          <Route path="/registration" element ={<SignUp />} />
+          <Route path = "/login" element = { <SignInSide/>} />
+        </Routes>
+      </BrowserRouter>
+      
     </div>
   );
 }

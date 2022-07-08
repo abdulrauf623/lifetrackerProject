@@ -11,6 +11,7 @@ export default function Hero() {
         <img
           className="watchimage"
           src="https://m-cdn.phonearena.com/images/articles/387778-image/Apple-Watch-Series-7-review-health.jpg"
+          alt="a watch"
         />
       </div>
     </div>
