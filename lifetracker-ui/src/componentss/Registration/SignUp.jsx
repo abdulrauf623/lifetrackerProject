@@ -12,6 +12,12 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {useState} from 'react'
+
+import "./Registration.css"
+
+import axios from  "axios"
+import {useNavigate} from "react-router-dom"
 
 function Copyright(props) {
   return (
@@ -28,14 +34,78 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignUp() {
-  const handleSubmit = (event) => {
+export default function SignUp({setAppState}) {
+
+
+  const [errors, setErrors] = useState({})
+  const navigate = useNavigate()
+  const [form, setForm] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: ""
+  })
+  
+ 
+
+
+
+
+  const handleOnInputChange = (event) => {
+
+    if (event.target.name === "email") {
+      if (event.target.value.indexOf("@") === -1) {
+        setErrors((e) => ({ ...e, email: "Please enter a valid email." }))
+      } else {
+        setErrors((e) => ({ ...e, email: null }))
+      }
+    }
+
+    setForm((f) => ({ ...f, [event.target.name]: event.target.value }))
+  }
+
+
+
+
+  const handleSubmit = async(event) => {
+    setErrors((e) => ({ ...e, form: null }))
+    
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+
+    try{
+
+      const res = await axios.post("http://localhost:3001/author/register", {
+        firstName: form.firstName,
+        lastName: form.lastName,
+        email: form.email,
+        password: form.password,
+      })
+
+
+
+      if (res?.data?.user) {
+        setAppState(res.data)
+        navigate("/portal")
+      } else {
+        setErrors((e) => ({ ...e, form: "Something went wrong with registration" }))
+      }
+      
+    //   const data = new FormData(event.currentTarget);
+    //   console.log({
+    //   email: data.get('email'),
+    //   password: data.get('password'),
+    //   firstName : data.get('firstName'),
+    //   lastName : data.get('lastName')
+    // });
+  
+  }
+
+    catch(err){
+
+      console.log(err)
+      const message = err?.response?.data?.error?.message
+      setErrors((e) => ({ ...e, form: message ? String(message) : String(err) }))
+    }
   };
 
   return (
@@ -56,7 +126,7 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}  onChange={handleOnInputChange} >
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -67,6 +137,7 @@ export default function SignUp() {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -89,6 +160,7 @@ export default function SignUp() {
                   autoComplete="email"
                 />
               </Grid>
+              {errors.email && <span className="error">{errors.email}</span>}
               <Grid item xs={12}>
                 <TextField
                   required

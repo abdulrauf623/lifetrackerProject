@@ -1,0 +1,28 @@
+.banner{
+
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-top: 50px;
+}
+
+.buttons{
+
+    margin-top: 30px;
+    margin-left: 1100px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+
+.button{
+
+    background: transparent;
+    height: 35px;
+    border: 1px orange solid;
+}
+
+
+.buttons>.button:not(:last-child) {
+    margin-right: 50px;
+   }
