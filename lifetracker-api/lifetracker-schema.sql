@@ -5,3 +5,17 @@ CREATE TABLE users(
     firstName TEXT NOT NULL,
     lastName TEXT NOT NULL
 );
+
+CREATE TABLE exercise(
+    id  SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    category TEXT NOT NULL,
+    duration INTEGER NOT NULL,
+    category INTEGER NOT NULL,
+    user_id  INTEGER,
+
+    FOREIGN KEY (user_id) REFERENCES users(id])
+
+
+
+)

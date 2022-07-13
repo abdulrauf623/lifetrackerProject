@@ -26,3 +26,34 @@
 .buttons>.button:not(:last-child) {
     margin-right: 50px;
    }
+
+.tabs{
+
+
+    display: flex;
+
+    flex-direction: row;
+    
+    justify-content: space-between;
+
+    margin-left: 300px;
+    margin-right: 300px;
+
+    margin-top: 60px;
+}
+
+.tab{
+
+    height: 300px;
+    width: 300px;
+    color: white;
+    background-color: orange;
+    border-radius: 20px;
+}
+
+.number{
+
+    margin-top: 150px;
+    font-size: 100px;
+    margin-left: 60px;
+}

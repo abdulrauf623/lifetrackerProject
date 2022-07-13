@@ -12,11 +12,13 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 
 import "./Registration.css"
 
-import axios from  "axios"
+import APIClient from "../service/APIClient"
+
+// import axios from  "axios"
 import {useNavigate} from "react-router-dom"
 
 function Copyright(props) {
@@ -34,7 +36,7 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignUp({setAppState}) {
+export default function SignUp({user, setUser}) {
 
 
   const [errors, setErrors] = useState({})
@@ -45,6 +47,16 @@ export default function SignUp({setAppState}) {
     email: "",
     password: ""
   })
+
+
+
+  useEffect(() => {
+    // if user is already logged in,
+    // redirect them to the home page
+    if (user?.email) {
+      navigate("/portal")
+    }
+  }, [user, navigate])
   
  
 
@@ -72,40 +84,57 @@ export default function SignUp({setAppState}) {
     
     event.preventDefault();
 
-    try{
 
-      const res = await axios.post("http://localhost:3001/author/register", {
-        firstName: form.firstName,
-        lastName: form.lastName,
-        email: form.email,
-        password: form.password,
-      })
+    const {data, error} = await APIClient.signUpUser({email : form.email, password : form.password})
 
 
 
-      if (res?.data?.user) {
-        setAppState(res.data)
-        navigate("/portal")
-      } else {
-        setErrors((e) => ({ ...e, form: "Something went wrong with registration" }))
-      }
-      
-    //   const data = new FormData(event.currentTarget);
-    //   console.log({
-    //   email: data.get('email'),
-    //   password: data.get('password'),
-    //   firstName : data.get('firstName'),
-    //   lastName : data.get('lastName')
-    // });
-  
-  }
-
-    catch(err){
-
-      console.log(err)
-      const message = err?.response?.data?.error?.message
-      setErrors((e) => ({ ...e, form: message ? String(message) : String(err) }))
+    if (error){
+      setErrors( (e) => ({...e, form : error}))
     }
+
+    if (data?.user){
+
+      setUser(data.user)
+      APIClient.setToken(data.token)
+    }
+
+
+
+  //   try{
+
+  //     const res = await axios.post("http://localhost:3001/author/register", {
+  //       firstName: form.firstName,
+  //       lastName: form.lastName,
+  //       email: form.email,
+  //       password: form.password,
+  //     })
+
+
+
+  //     if (res?.data?.user) {
+  //       setUser(res.data.user)
+
+  //     } else {
+  //       setErrors((e) => ({ ...e, form: "Something went wrong with registration" }))
+  //     }
+      
+  //   //   const data = new FormData(event.currentTarget);
+  //   //   console.log({
+  //   //   email: data.get('email'),
+  //   //   password: data.get('password'),
+  //   //   firstName : data.get('firstName'),
+  //   //   lastName : data.get('lastName')
+  //   // });
+  
+  // }
+
+  //   catch(err){
+
+  //     console.log(err)
+  //     const message = err?.response?.data?.error?.message
+  //     setErrors((e) => ({ ...e, form: message ? String(message) : String(err) }))
+  //   }
   };
 
   return (

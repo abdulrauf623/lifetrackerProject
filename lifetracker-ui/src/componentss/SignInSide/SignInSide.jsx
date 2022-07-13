@@ -12,8 +12,8 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useState } from "react";
-import axios from "axios";
+import { useState, useEffect } from "react";
+import APIClient from "../service/APIClient";
 import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
@@ -36,7 +36,7 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignInSide({ setAppState }) {
+export default function SignInSide({ user, setUser }) {
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
   const [form, setForm] = useState({
@@ -44,33 +44,57 @@ export default function SignInSide({ setAppState }) {
     password: "",
   });
 
+  useEffect(() => {
+    // if user is already logged in,
+    // redirect them to the home page
+    if (user?.email) {
+      navigate("/portal");
+    }
+  }, [user, navigate]);
+
+  console.log("User", user);
+
   const handleSubmit = async (event) => {
     setErrors((e) => ({ ...e, form: null }));
 
-    event.preventDefault()
+    event.preventDefault();
+    const { data, error } = await APIClient.loginUser({
+      email: form.email,
+      password: form.password,
+    });
 
-    try {
-      const res = await axios.post(`http://localhost:3001/author/login`,{
-        email: form.email,
-        password: form.password,
-      });
-      if (res?.data) {
-        setAppState(res.data);
-        navigate("/portal");
-      } else {
-        setErrors((e) => ({
-          ...e,
-          form: "Invalid username/password combination",
-        }));
-      }
-    } catch (err) {
-      console.log(err);
-      const message = err?.response?.data?.error?.message;
-      setErrors((e) => ({
-        ...e,
-        form: message ? String(message) : String(err),
-      }));
+    if (error) {
+      setErrors((e) => ({ ...e, form: error }));
     }
+
+    if (data?.user) {
+      setUser(data.user);
+      APIClient.setToken(data.token);
+    }
+
+    // try {
+    //   const res = await axios.post(`http://localhost:3001/author/login`,{
+    //     email: form.email,
+    //     password: form.password,
+    //   });
+    //   if (res?.data) {
+    //     setUser(res.data);
+    //     navigate("/portal")
+    //   } else {
+    //     setErrors((e) => ({
+    //       ...e,
+    //       form: "Invalid username/password combination",
+    //     }));
+    //   }
+
+    // } catch (err) {
+    //   console.log(err);
+    //   const message = err?.response?.data?.error?.message;
+    //   setErrors((e) => ({
+    //     ...e,
+    //     form: message ? String(message) : String(err),
+    //   }));
+    // }
   };
 
   const handleOnInputChange = (event) => {

@@ -2,6 +2,10 @@ const express = require("express");
 const morgan = require("morgan");
 const app = express();
 
+const  {extractUserFromJWT} = require("../lifetracker-api/middleware/security")
+
+const {NotFoundError} = require("../lifetracker-api/utils/errors")
+
 const authRouter = require("./routes/auth")
 
 const cors = require("cors")
@@ -10,6 +14,7 @@ const port = 3001;
 
 app.use(cors())
 app.use(morgan("tiny"))
+app.use(extractUserFromJWT)
 app.use(express.json())
 
 app.use("/author", authRouter)

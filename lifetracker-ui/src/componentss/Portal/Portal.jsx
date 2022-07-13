@@ -1,11 +1,17 @@
 import "./Portal.css";
 import { useNavigate, Link } from "react-router-dom";
 
-export default function Portal({user, setAppState}) {
+export default function Portal({ user, setUser }) {
   const navigate = useNavigate();
-  const isAuthenticated = Boolean(user?.email);
+  const isAuthenticated = Boolean(user?.email) || Boolean(user?.user?.email);
+  console.log("auth?", isAuthenticated)
 
-  return (
+  console.log("User", user);
+
+
+
+
+  const show = isAuthenticated ?(
     <>
       <div className="banner">
         <h1> Activity Feed</h1>
@@ -17,6 +23,23 @@ export default function Portal({user, setAppState}) {
         </div>
       </div>
 
+      <div className="tabs">
+        <div className="tab">
+         <h1 className=""> Nutrition</h1>
+         <div className="number"> 0</div>
+        </div>
+        <div className="tab">
+          <h1>Sleep</h1> 
+          <div className="number"> 0</div>
+        </div>
+
+        <div className="tab">
+          <h1> Exercise</h1>
+          <div className="number">0</div>
+        </div>
+      </div>
+    
     </>
-  );
+  ) : <div> Login to see portal</div>
+  return <>{show}</>;
 }
