@@ -8,6 +8,8 @@ const {NotFoundError} = require("../lifetracker-api/utils/errors")
 
 const authRouter = require("./routes/auth")
 
+const exercise = require("./routes/exercise")
+
 const cors = require("cors")
 
 const port = 3001;
@@ -18,6 +20,8 @@ app.use(extractUserFromJWT)
 app.use(express.json())
 
 app.use("/author", authRouter)
+
+app.use("/exercise", exercise)
 
 app.get("/", (req, res, next) => {
   res.status(200).send("Hello World");

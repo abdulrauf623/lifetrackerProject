@@ -20,6 +20,7 @@ const dbName = process.env.DATABASE_NAME || "lifetracker"
 
 
 
+
 return process.env.DATABASE_URL || `postgresql://${dbUser}:${dbPass}@${dbHost}:${dbPort}/${dbName}`
 
 
@@ -28,6 +29,8 @@ return process.env.DATABASE_URL || `postgresql://${dbUser}:${dbPass}@${dbHost}:$
 
 
 const BCRYPT_WORK_FACTOR = 13
+
+
 
 
 console.log("Life Tracker Registration Config:".green)

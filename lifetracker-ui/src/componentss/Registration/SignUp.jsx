@@ -85,7 +85,10 @@ export default function SignUp({user, setUser}) {
     event.preventDefault();
 
 
-    const {data, error} = await APIClient.signUpUser({email : form.email, password : form.password})
+    const {data, error} = await APIClient.signUpUser({email : form.email, password : form.password, firstName : form.firstName, lastName : form.lastName})
+
+    console.log("Error?", error)
+    console.log("Data?", data)
 
 
 

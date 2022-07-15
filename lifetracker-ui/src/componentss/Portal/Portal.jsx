@@ -1,5 +1,6 @@
 import "./Portal.css";
 import { useNavigate, Link } from "react-router-dom";
+import ExerciseForm from "../ExerciseForm/ExerciseForm";
 
 export default function Portal({ user, setUser }) {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ export default function Portal({ user, setUser }) {
         <h1> Activity Feed</h1>
 
         <div className="buttons">
-          <button className="button"> Add exercise</button>
+          <Link to="/exerciseForm"> <button className="button"> Add exercise</button></Link>
           <button className="button"> Log Sleep</button>
           <button className="button">Record Nutrition</button>
         </div>

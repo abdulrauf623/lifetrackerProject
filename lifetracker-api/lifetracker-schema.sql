@@ -8,13 +8,13 @@ CREATE TABLE users(
 
 CREATE TABLE exercise(
     id  SERIAL PRIMARY KEY,
-    name TEXT NOT NULL,
+    exercise_name TEXT NOT NULL,
     category TEXT NOT NULL,
     duration INTEGER NOT NULL,
-    category INTEGER NOT NULL,
+    intensity INTEGER NOT NULL,
     user_id  INTEGER,
 
-    FOREIGN KEY (user_id) REFERENCES users(id])
+    FOREIGN KEY (user_id) REFERENCES users(id)
 
 
 

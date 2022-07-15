@@ -63,6 +63,9 @@ export default function SignInSide({ user, setUser }) {
       password: form.password,
     });
 
+    console.log("users", data)
+    console.log("Error", error)
+
     if (error) {
       setErrors((e) => ({ ...e, form: error }));
     }

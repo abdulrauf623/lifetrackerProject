@@ -48,9 +48,6 @@ class User {
         )
         VALUES  ($1, $2, $3, $4)
         RETURNING id, email, password, firstName, lastName;
-        
-        
-        
         `,
       [
         lowerCasedEmail,

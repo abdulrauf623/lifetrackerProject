@@ -36,12 +36,26 @@ class APIClient {
   }
 
 
+  async fetchPostFromToken(){
+    const user = await this.fetchUserFromToken()
+    console.log("User fetched from token", user)
+    const id = user.data.user.id
+    const result = await this.request({endpoint : `exercise/${id}`, method : `GET`})
+    console.log("Result here", result)
+    return result
+  }
+
+
   async fetchUserFromToken(){
     const result =  await this.request({endpoint : `author/me`, method : `GET`})
 
     console.log("fetch user?", result)
 
     return result
+  }
+
+  async createPost(post) {
+    return await this.request({endpoint : `exercise`, method : `POST`, data: post})
   }
 
 

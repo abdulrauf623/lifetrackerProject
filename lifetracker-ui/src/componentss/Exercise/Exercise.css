@@ -1,31 +1,26 @@
-.overview-button{
-background: transparent;
-height: 35px;
-border: 1px orange solid;
-
+.overview-button {
+  background: transparent;
+  height: 35px;
+  border: 1px orange solid;
 }
 
-.overview{
-    font-size: 100px;
+.overview {
+  font-size: 100px;
 }
 
-.title{
-    display: flex;
-    background-color: beige;
-    height: 150px;
-    justify-content: center;
-    
+.title {
+  display: flex;
+  background-color: beige;
+  height: 150px;
+  justify-content: center;
 }
 
-.boxes{
-
-    display: flex;
-    
+.boxes {
+  display: flex;
 }
 
-.overview-button{
-
-    display: flex;
-    margin-top: 120px;
-    margin-left: 1000px;
+.overview-button {
+  display: flex;
+  margin-top: 120px;
+  margin-left: 1000px;
 }

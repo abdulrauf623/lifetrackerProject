@@ -7,6 +7,8 @@ const db = new Client({connectionString: getDatabaseUrl()})
 require("colors")
 
 
+
+
 db.connect((err) => {
 
     if (err){
