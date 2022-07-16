@@ -4,7 +4,8 @@
 
 Submitted by: **Abdul Rauf**
 
-Deployed Application: [Lifetracker Deployed Site](ADD_LINK_HERE)
+Deployed Application: [Lifetracker Deployed Site][(ADD_LINK_HERE](https://lifetracker-623.surge.sh/))
+// with the deployed website, users are not able to login and sign up yet because i am yet to include Access Control Allow Origin to the headers of the post and get requests but the landing page displays correctly.
 
 ## Application Features
 
